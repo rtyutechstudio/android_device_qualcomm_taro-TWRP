@@ -45,3 +45,32 @@ PRODUCT_PACKAGES += \
     vendor.display.config@1.0 \
     vendor.display.config@2.0 \
     vendor.qti.hardware.display.composer@3.0
+
+# Recovery Modules/Binaries
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hidl.allocator@1.0 \
+    android.hidl.memory@1.0 \
+    android.hidl.memory.token@1.0 \
+    libdmabufheap \
+    libhidlmemory \
+    libion \
+    libnetutils \
+    libxml2 \
+    vendor.display.config@1.0 \
+    vendor.display.config@2.0 \
+    debuggerd \
+    strace
+
+# Crypto HALs
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1-service-qti \
+    android.hardware.gatekeeper@1.0-service-qti \
+    vendor.qti.hardware.qseecom@1.0-service
+
+# Decryption
+PRODUCT_PACKAGES += \
+    qcom_decrypt \
+    qcom_decrypt_fbe
+
+PRODUCT_PACKAGES += \
+    qseecomd

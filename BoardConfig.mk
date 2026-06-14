@@ -38,6 +38,7 @@ TARGET_BOARD_PLATFORM := taro
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno730
 QCOM_BOARD_PLATFORMS += sm8450
 BOARD_USES_QCOM_HARDWARE := true
+TW_HAS_EDL_MODE := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE          := video=vfb:640x400
@@ -45,6 +46,7 @@ BOARD_KERNEL_CMDLINE          += bpp=32
 BOARD_KERNEL_CMDLINE          += memsize=3072000
 BOARD_KERNEL_CMDLINE          += bootconfig
 BOARD_KERNEL_CMDLINE          += androidboot.selinux=permissive
+BOARD_BOOTCONFIG              += androidboot.selinux=permissive
 BOARD_VENDOR_BASE             := 0x00000000
 BOARD_KERNEL_OFFSET           := 0x00008000
 BOARD_RAMDISK_OFFSET          := 0x01000000
@@ -125,13 +127,14 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # Crypto
-TW_INCLUDE_CRYPTO := false
-TW_INCLUDE_CRYPTO_FBE := false
-TW_INCLUDE_FBE_METADATA_DECRYPT := false
-BOARD_USES_QCOM_FBE_DECRYPTION := false
-BOARD_USES_METADATA_PARTITION := false
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+BOARD_USES_METADATA_PARTITION := true
 TW_USE_FSCRYPT_POLICY := 2
-DECRYPT_PLATFORM_VERSION := 14
+DECRYPT_PLATFORM_VERSION := 12
+TW_LOAD_VENDOR_MODULES := "heap_mem_ext_v01.ko mdt_loader.ko qseecom-mod.ko smcinvoke_mod.ko qsee_ipc_irq_bridge.ko"
 ifdef DECRYPT_PLATFORM_VERSION
 PLATFORM_VERSION := $(DECRYPT_PLATFORM_VERSION)
 else
@@ -141,6 +144,32 @@ PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 PLATFORM_SECURITY_PATCH := 2022-03-05
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+
+# Specify the HAL and system modules to be included in the recovery image for hardware support.
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hidl.allocator@1.0 \
+    android.hidl.memory@1.0 \
+    android.hidl.memory.token@1.0 \
+    libdmabufheap \
+    libhidlmemory \
+    libion \
+    libnetutils \
+    vendor.display.config@1.0 \
+    vendor.display.config@2.0 \
+    libdebuggerd_client
+
+# Define the source file paths for the shared libraries that must be copied into recovery.
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.allocator@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory.token@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libdmabufheap.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libnetutils.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libdebuggerd_client.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 
 # Display
 TARGET_SCREEN_DENSITY := 480
@@ -187,7 +216,6 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/default"
 TW_INCLUDE_LIBDRM := true
 TW_USE_DRM := true
 #TW_NO_SCREEN_BLANK := true
-#TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko sec_touchscreen.ko qti_battery_charger.ko"
 #TW_NO_HAPTICS := false
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone35/temp"
 TW_BATTERY_SYSFS_WAIT_SECONDS := 6
