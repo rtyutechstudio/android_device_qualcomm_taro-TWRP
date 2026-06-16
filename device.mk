@@ -23,6 +23,12 @@ PRODUCT_PACKAGES += \
     bootctrl.taro_sm8450.recovery \
     android.hardware.boot@1.2-impl-qti.recovery
 
+# Boot control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.2-impl-qti \
+    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-service
+
 # SHIPPING API
 PRODUCT_SHIPPING_API_LEVEL := 31
 
@@ -74,3 +80,20 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     qseecomd
+
+
+# Scripts
+PRODUCT_PACKAGES += \
+    otapreopt_script \
+    cppreopts.sh
+
+# Update Engine
+PRODUCT_PACKAGES += \
+    update_engine \
+    update_verifier \
+    update_engine_sideload
+
+# Update Script
+PRODUCT_PACKAGES += \
+    otapreopt_script \
+    cppreopts.sh

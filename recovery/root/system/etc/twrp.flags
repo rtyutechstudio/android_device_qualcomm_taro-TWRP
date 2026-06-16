@@ -27,13 +27,10 @@
 /ta                    emmc    /dev/block/bootdevice/by-name/TA                                   flags=display="trim-area";backup=1;flashimg=1
 
 # Firmware partitions
-/bluetooth             vfat    /dev/block/bootdevice/by-name/bluetooth                            flags=display="bluetooth";slotselect;fsflags="ro;shortname=lower;uid=1002;gid=3002;dmask=227;fmask=337;wait"
-/bluetooth_image       emmc    /dev/block/bootdevice/by-name/bluetooth                            flags=display="bluetooth";slotselect;backup=1;flashimg=1
-/dsp                   ext4    /dev/block/bootdevice/by-name/dsp                                  flags=display="dsp";slotselect
-/dsp_image             emmc    /dev/block/bootdevice/by-name/dsp                                  flags=display="dsp";slotselect;backup=1;flashimg=1
-/modem                 vfat    /dev/block/bootdevice/by-name/modem                                flags=display="Modem";wait;slotselect
-/modem_img             emmc    /dev/block/bootdevice/by-name/modem                                flags=backup=1;display="Modem";slotselect;flashimg=1
+/bluetooth             vfat    /dev/block/bootdevice/by-name/bluetooth                            flags=display="bluetooth";fsflags="ro;shortname=lower;uid=1002;gid=3002;dmask=227;fmask=337;wait"
+/dsp                   ext4    /dev/block/bootdevice/by-name/dsp                                  flags=display="dsp"
+/modem                 vfat    /dev/block/bootdevice/by-name/modem                                flags=display="Modem";wait
 
 # Removable storage
 /sdcard1               auto    /dev/block/mmcblk1p1                       /dev/block/mmcblk1      flags=fsflags=utf8;display="microsd";storage;wipeingui;removable
-/usb_otg               auto    /dev/block/sdc1                            /dev/block/sdc          flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable
+/storage/usbotg        auto    auto											auto				  flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable
