@@ -26,38 +26,10 @@
 #
 import /init.recovery.qcom_decrypt.rc
 
-service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
-    class hal
-    user root
-    group root system input
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-service health-hal-2-0 /system/bin/android.hardware.health@2.1-service
-    class hal
-    user root
-    group root
-    capabilities WAKE_ALARM
-    file /dev/kmsg w
-    seclabel u:r:recovery:s0
-    interface android.hardware.health@2.0::IHealth default
-
-service qteeconnector-hal-1-0 /system/bin/vendor.qti.hardware.qteeconnector@1.0-service
-    class early_hal
-    user system
-    group system
-
-service vendor.keymaster-sb-4-0 /system/bin/android.hardware.keymaster@4.0-strongbox-service-qti
-    class early_hal
-    user system
-    group system drmrpc
-	seclabel u:r:recovery:s0
-    disabled
-
 on early-init
 	setenforce 0
     mkdir /vendor/firmware_mnt 0771 system system
+	chmod 644 /vendor/etc/ueventd.rc
 
 on init
 	chmod 0755 /system/bin/init.qti.keymaster.sh
@@ -75,5 +47,5 @@ on fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 	mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /vendor/firmware_mnt ro
 	
-on late-init
-    start vendor.qti.vibrator
+
+

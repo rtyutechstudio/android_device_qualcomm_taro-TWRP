@@ -59,4 +59,28 @@
 		<fqname>@1.0::IAppConnector/default</fqname>
 		<fqname>@1.0::IGPAppConnector/default</fqname>
 	</hal>
+
+	<!-- KeyMint device HAL -->
+	<hal format="aidl">
+		<name>android.hardware.security.keymint</name>
+		<fqname>IKeyMintDevice/default</fqname>
+	</hal>
+
+	<!-- SharedSecret HAL -->
+	<hal format="aidl">
+		<name>android.hardware.security.sharedsecret</name>
+		<fqname>ISharedSecret/default</fqname>
+	</hal>
+
+	<!-- SecureClock HAL -->
+	<hal format="aidl">
+		<name>android.hardware.security.secureclock</name>
+		<fqname>ISecureClock/default</fqname>
+	</hal>
+
+	<!-- RemotelyProvisionedComponent HAL -->
+	<hal format="aidl">
+		<name>android.hardware.security.keymint</name>
+		<fqname>IRemotelyProvisionedComponent/default</fqname>
+	</hal>
 </manifest>
